@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Analog Clock</title>
+
+	<style type="text/css">
+		body {
+			margin: 0;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #eee;
+		}
+		#clock {
+			width: 250px;
+			height: 250px;
+			border-radius: 50%;
+			background-color: white;
+			border: 5px solid #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			position: relative;
+			background-color: #212735;
+		}
+		.dash {
+			width: 10px;
+			height: 1px;
+			background-color: #aaa;
+			position: absolute;
+		}
+		.dash-1 {
+			top: 125px;
+			left: 10px;
+		}
+		.dash-2 {
+			top: 125px;
+			right: 10px;
+		}
+		.dash-3 {
+			left: 120px;
+			top: 15px;
+			transform: rotate(90deg);
+		}
+		.dash-4 {
+			bottom: 15px;
+			left: 120px;
+			transform: rotate(90deg);
+		}
+		.hand {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			transform-origin: center bottom;
+			border-radius: 40px;
+		}
+		#second {
+			height: 108px;
+			width: 0.7px;
+			background-color: #F05B55;
+			z-index: 5;
+		}
+		#minute {
+			height: 90px;
+			width: 3px;
+			background-color: #ddd;
+			z-index: 4;
+		}
+		#hour {
+			height: 55px;
+			width: 4px;
+			background-color: #ddd;
+			z-index: 3;
+		}
+		#center {
+			background-color: #F05B55;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 6;
+		}
+	</style>
+	
+	<script type="text/javascript">
+	
+		setInterval(getTime, 10); // to continuously rotate
+		
+		function getTime() {
+			date = new Date();
+			
+			s = date.getSeconds() + (date.getMilliseconds()/1000);
+			m = date.getMinutes();
+			h = date.getHours();
+			h = h==0 ? 12 : h % 12;
+
+			document.getElementById('second').style.transform = 'translate(-50%, -100%) rotate(' + s*6 + 'deg)';
+			document.getElementById('minute').style.transform = 'translate(-50%, -100%) rotate(' + m*6 + 'deg)';
+			document.getElementById('hour').style.transform = 'translate(-50%, -100%) rotate(' + (h*30 + m*0.5) + 'deg)';
+		}
+	</script>
+</head>
+<body>
+	<div id="clock">
+	<div class="dash-1 dash"></div>
+	<div class="dash-2 dash"></div>
+	<div class="dash-3 dash"></div>
+	<div class="dash-4 dash"></div>
+	<div id="second" class="hand"></div>
+	<div id="minute" class="hand"></div>
+	<div id="hour" class="hand"></div>
+	<div id="center"></div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Clock</title>
+	<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600&display=swap" rel="stylesheet">
+	<style type="text/css">
+		* {
+			font-family: 'Oxanium', cursive;
+		}
+		div {
+			margin: 100px auto 0;
+			padding: 50px;
+			width: 50%;
+			background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+			border-radius: 20px;
+			color: #13EFF7;
+			box-shadow:0 4px 10px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		}
+		h1 {
+			font-size: 6em;
+			letter-spacing: 5px;
+			margin: 10px 0;
+		}
+		#ampm {
+			margin-right: 17.5%;
+			opacity: 0.7;
+		}
+		#date {
+			margin-left: 17.5%;
+			text-transform: uppercase;
+			opacity: 0.7;
+		}
+	</style>
+
+	<script type="text/javascript">
+		setInterval(clock, 1000)
+
+		formatZero = (t) => t < 10 ? "0" + t : t;
+
+		function clock() {
+			date = new Date();
+			hour = date.getHours();
+			ampm = hour >= 12 ? 'PM' : 'AM';
+			hour = hour == 0 ? 12 : formatZero(hour % 12);
+			min = formatZero(date.getMinutes());
+			sec = formatZero(date.getSeconds());
+
+			time = `${hour}:${min}:${sec}`;
+
+			days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+			todaydate = `${days[date.getDay()]} ${formatZero(date.getDate())}`;
+			document.getElementById('time').innerText = time;
+			document.getElementById('date').innerText = todaydate;
+			document.getElementById('ampm').innerText = ampm;
+			
+
+		}
+	</script>
+	
+</head>
+<body>
+	<div>
+		<p id="ampm" align="right"></p>
+		<h1 id="time" align="center"></h1>
+		<p id="date"></p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tile Calculator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		* { font-family: 'Nunito', sans-serif; }
+	</style>
+
+	<!-- linked to bootstrap -->
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<script type="text/javascript" src="bootstrap.bundle.min.js"></script>
+
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			// for tooltip used in overage
+	    $("body").tooltip({ selector: '[data-toggle=tooltip]'});
+
+	    // show hide in overage yes or no radio
+	     $("input[name$='rdooverage']").click(function() {
+        var overage = $(this).val();
+        if (overage == 'yes') {
+        	$('#overage-info').hide();
+        	$('.overage-input').show();
+        } else {
+        	$('#overage-info').show();
+        	$('.overage-input').hide();
+        }
+       
+	    });
+		});
+
+		// ******* javascript calculations ********
+
+		calculateArea = (w, l) => (w * l).toFixed(2);
+
+		calculatePrice = (t, p) => (t * p);
+
+		function calculateTile(roomarea, tilearea, overage) {
+			return document.getElementById("yes").checked ? (((roomarea / tilearea) * (1+overage/100)).toFixed()) : ((roomarea / tilearea).toFixed());
+		}
+
+		// validation
+		function validInput() {
+			
+			if (document.Form.roomwidthft.value == "" || document.Form.roomwidthin.value == "" || document.Form.roomlengthft.value == "" || document.Form.roomlengthin.value == "" || document.Form.tilewidthft.value == "" || document.Form.tilewidthin.value == "" || document.Form.tilelengthin.value == "") {
+				// for emply value
+				alert("Please fill the measurement.")
+			} else if (document.Form.roomwidthft.value < 0 || document.Form.roomwidthin.value < 0 || document.Form.roomlengthft.value < 0 || document.Form.roomlengthin.value < 0 || document.Form.tilewidthft.value < 0 || document.Form.tilewidthin.value < 0 || document.Form.tilelengthin.value < 0 || document.Form.price.value < 0) {
+				// for negative value
+				alert("Please fill positive value.")
+			} else if((document.Form.roomwidthft.value == 0 && document.Form.roomwidthin.value == 0) || (document.Form.roomlengthft.value == 0 && document.Form.roomlengthin.value == 0) || (document.Form.type.value == 'floor' && document.Form.tilewidthft.value == 0) || (document.Form.type.value == 'wall' && (document.Form.tilewidthin.value == 0 || document.Form.tilelengthin.value == 0))) {
+				// for invalid zero value
+				alert("Please fill the measurement.")
+			} else if(document.Form.roomwidthin.value > 12 || document.Form.roomlengthin.value > 12) {
+				// for room inch inputs greater than 12
+				alert("Inches cannot be more than 12. Please check the value again.")
+			} else if(document.getElementById("yes").checked && (document.Form.overage.value > 15 || document.Form.overage.value < 5)) {
+				// for overage limitation
+				alert("Overage value should be 5 ~ 15 %.");
+			} else if (document.Form.price.value == "" || document.Form.price.value == 0) {
+				// for price validation
+				alert("Please enter the price.");
+			} else {
+				return true;
+			}
+		}
+
+		// function call onclick of calculate button
+		function displayResult() {
+
+			if (validInput()) {
+				roomwidthft = +document.getElementById("roomwidthft").value;
+				roomwidthin = +document.getElementById("roomwidthin").value;
+				roomwidth = roomwidthft * 12 + roomwidthin;
+				roomlengthft = +document.getElementById("roomlengthft").value;
+				roomlengthin = +document.getElementById("roomlengthin").value
+				roomlength = roomlengthft * 12 + roomlengthin;
+				roomarea = calculateArea(roomwidth, roomlength);
+
+				type = document.Form.type.value;
+				tilewidthft = +document.getElementById("tilewidthft").value;
+				tilewidthin = +document.getElementById("tilewidthin").value;
+				tilewidth = tilewidthft * 12 + tilewidthin;
+				tilelengthft = type == 'floor' ? tilewidthft : 0;
+
+				tilelengthin = +document.getElementById("tilelengthin").value;
+				tilelength = tilelengthft * 12 + tilelengthin;
+				tilearea = calculateArea(tilewidth, tilelength);
+
+				overage = (+document.getElementById("overage").value).toFixed();
+				nooftile = calculateTile(roomarea, tilearea, overage);
+
+				unitprice = +document.getElementById("price").value;
+				totalprice = calculatePrice(nooftile, unitprice);
+
+				// set value in html result table
+				let r_room = document.getElementById("result_room");
+				r_room.innerHTML = (roomwidthft != 0 ? roomwidthft + "' " : "") + (roomwidthin != 0 ? roomwidthin + "\" " : "") + " x " + (roomlengthft != 0 ? roomlengthft + "' " : "") + (roomlengthin != 0 ? roomlengthin + "\" " : ""); 
+
+				let r_tile = document.getElementById("result_tile");
+				r_tile.innerHTML = (tilewidthft != 0 ? tilewidthft + "' " : "") + (tilewidthin != 0 ? tilewidthin + "\" " : "") + " x " + (tilelengthft != 0 ? tilelengthft + "' " : "") + (tilelengthin != 0 ? tilelengthin + "\" " : ""); 
+
+				let r_nooftile = document.getElementById("result_nooftile");
+				r_nooftile.innerHTML = nooftile;
+
+				let r_unitprice = document.getElementById("result_unitprice");
+				r_unitprice.innerHTML = unitprice;
+
+				let r_totalprice = document.getElementById("result_price");
+				r_totalprice.innerHTML = totalprice;
+
+				let r_type = document.getElementById("result_type");
+				r_type.innerHTML = type;
+
+				let r_overage = document.getElementById("result_overage");
+				r_overage.innerHTML = document.getElementById("yes").checked ? "Included (" + overage + "%)" : "Not included";
+
+				let r_table = document.getElementById("result-table");
+				r_table.style.display = 'block';
+			}
+		}
+
+		// show hide div depending on combo box value (floor and wall) + adjusting columns
+		// this function is called onchange attribute in html
+		function showDiv(select) {
+			feet = document.getElementsByClassName('feet');
+			inch = document.getElementsByClassName('inch');
+			if (select.value=="floor"){ 
+				for(let f = 0; f < feet.length; f++){
+					feet[f].style.display = "block"; 
+				}
+
+				// clear inches value if user chooses floor and calculates next time after wall
+				document.Form.tilewidthin.value = 0;
+				document.Form.tilelengthin.value = 0;
+				
+				for(let i = 0; i < inch.length; i++){
+					inch[i].style.display = "none"; 
+				}
+				document.getElementById('tilewidth-label').innerText = 'Tile Width - Length';
+			} else {
+				// clear feet value if user chooses floor and calculates next time after wall
+				document.Form.tilewidthft.value = 0;
+
+				for(let f = 0; f < feet.length; f++){
+					feet[f].style.display = "none"; 
+				}
+				for(let i = 0; i < inch.length; i++){
+					inch[i].style.display = "block"; 
+				}
+				document.getElementById('tilewidth-label').innerText = 'Tile Width';
+			}
+		}
+
+	</script>
+
+</head>
+<body>
+	<header>
+		<h1 class="text-center font-weight-bold pt-3 pb-4 bg-info text-white shadow">Tile Calculator for Flooring</h1>
+	</header>
+
+	<main>
+		<div class="container py-4">
+			<form name="Form">
+				<!-- room section -->
+				<div class="row mb-4">
+					<div class="col-md-8 offset-md-2">
+						<h5 class="font-weight-bolder">Room Info <hr class="ml-0 w-25 mb-4"></h5>
+
+						<div class="form-group row py-2">
+					    <label class="col-sm-4 col-form-label">Room Width:</label>
+					    <div class="col-4 col-sm-3">
+					      <input type="number" class="form-control" id="roomwidthft" name="roomwidthft" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label" for="roomwidthft">ft</label>
+					    <div class="col-4 col-sm-3">
+					      <input type="number" class="form-control" id="roomwidthin" name="roomwidthin" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label" for="roomwidthin" >inch</label>
+					  </div>
+
+					  <div class="form-group row py-2">
+					    <label class="col-sm-4 col-form-label">Room Length:</label>
+					    <div class="col-4 col-sm-3">
+					      <input type="number" class="form-control" id="roomlengthft" name="roomlengthft" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label" for="roomlengthft">ft</label>
+					    <div class="col-4 col-sm-3">
+					      <input type="number" class="form-control" id="roomlengthin" name="roomlengthin" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label" for="roomlengthin">inch</label>
+					  </div>
+
+					  <div class="form-group row py-2">
+					  	<label class="col-6 col-sm-4 col-form-label">Want to Add Overage?</label>
+					  	<div class="col-3 col-sm-2 col-sm-4">
+					  		<div class="custom-control custom-radio custom-control-inline col-form-label">
+								  <input type="radio" id="yes" name="rdooverage" class="custom-control-input" value="yes">
+								  <label class="custom-control-label" for="yes">Yes</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline col-form-label">
+								  <input type="radio" id="no" name="rdooverage" class="custom-control-input" value="no" checked>
+								  <label class="custom-control-label" for="no">No</label>
+								</div>
+					  	</div>
+					  	<div class="col-3 col-sm-4 text-right" id="overage-info">
+					  		<button type="button" class="btn btn-outline-info px-2 py-0 btn-sm rounded-circle font-weight-bold" data-toggle="tooltip" data-placement="top" title="It is important to add about 5 ~ 15% overage to be certain to have enough tiles to maintain your pattern.">&#63;</button>
+					  	</div>
+					  	<div class="col-2 col-sm-3 overage-input" style="display: none;">
+					  		<input type="number" class="form-control"id="overage" name="overage" min="5" max="15" value="5">
+					  	</div>
+					  	<label class="col-1 col-sm-1 overage-input" style="display: none;">%</label>
+					  </div>
+
+					</div>
+				</div>
+
+				<!-- tile section -->
+				<div class="row mb-4">
+					<div class="col-md-8 offset-md-2">
+						<h5 class="font-weight-bolder">Tile Info <hr class="ml-0 w-25 mb-4"></h5>
+
+						<div class="form-group row py-2">
+							<label class="col-sm-4 col-form-label" for="type">Flooring For:</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="type" id="type" onchange="showDiv(this)">
+									<option value="floor">Floor</option>
+									<option value="wall">Wall</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group row py-2">
+					    <label class="col-sm-4 col-form-label" id="tilewidth-label">Tile Width - Length:</label>
+					    <div class="col-10 col-sm-7 feet">
+					      <input type="number" class="form-control" id="tilewidthft" name="tilewidthft" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label feet" for="tilewidthft">ft</label>
+					    <div class="col-10 col-sm-7 inch" style="display: none;">
+					      <input type="number" class="form-control" id="tilewidthin" name="tilewidthin" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label inch" for="tilewidthin" style="display: none;">inch</label>
+					  </div>
+
+					  <div class="form-group row py-2" id="length-div">
+					    <label class="col-sm-4 col-form-label inch" style="display: none;">Tile Length:</label>
+					    <div class="col-10 col-sm-7 inch" id="lengthin-div" style="display: none;">
+					      <input type="number" class="form-control" id="tilelengthin" name="tilelengthin" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label inch" for="tilelengthin" style="display: none;">inch</label>
+					  </div>
+
+					  <div class="form-group row py-2">
+					    <label class="col-sm-4 col-form-label" for="price">Price per Tile:</label>
+					    <div class="col-10 col-sm-7">
+					    	<input type="number" class="form-control" id="price" name="price" min="0" max="10000" value="0">
+					    </div>
+					    <label class="col-2 col-sm-1 col-form-label" for="price">MMK</label>
+					  </div>
+
+					  <button type="button" class="btn btn-info btn-block font-weight-bold py-2 mt-5" onclick="displayResult()">Calculate</button>
+
+					</div>
+				</div>
+			</form>
+
+			<!-- result -->
+			<section id="result-table" style="display: none;">
+				<hr class="my-5">
+				<div class="row mb-4">
+					<div class="col-md-8 offset-md-2">
+						<table class="table table-hover table-bordered">
+						  <thead>
+						    <tr class="text-center">
+						      <th scope="col" colspan="3">Result</th>
+						    </tr> 
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">Room</th>
+						      <td colspan="2"><span id="result_room"></span></td>
+						    </tr>
+						    <tr>
+						      <td scope="row"><strong>Tile</strong> (for <span id="result_type"></span>)</td>
+						      <td colspan="2"><span id="result_tile"></span></td>
+						    </tr>
+						    <tr>
+						    	<th scope="row">Overage</th>
+						    	<td colspan="2"><span id="result_overage"></span></td>
+						    </tr>
+						    <tr>
+						      <th scope="row">Total Tiles</th>
+						      <td><span id="result_nooftile"></span></td>
+						      <td><span id="result_unitprice"></span> MMK/tile</td>
+						    </tr>
+						    <tr>
+						    	<th scope="row">Total Price</th>
+						    	<td colspan="2"><span id="result_price"></span> MMK</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<footer class="py-3 bg-light text-center font-italic text-secondary">
+		Javascript First Day Assignment - Tile Calculator
+	</footer>
+
+</body>
+</html>

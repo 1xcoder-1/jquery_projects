@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color:#000;
+  color: white;
+  margin: 0;
+  padding: 50px 0;
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.num-to-word-block {
+  display: inline-block;
+  width: 700px;
+  padding: 50px;
+  background: green;
+  border: 1px solid black;
+}
+.num-to-word-block label:nth-child(1) {
+  display: block;
+  position: relative;
+}
+.num-to-word-block label:nth-child(1) span {
+  display: block;
+  text-align: left;
+  text-transform: uppercase;
+}
+.num-to-word-block label:nth-child(1)::after {
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+}
+.num-to-word-block input[name=number] {
+  width: 600px;
+  border: none;
+  font-size: 20pt;
+  text-align: right;
+  background-color: green;
+  color: gold;
+}
+.num-to-word-block input[name=number]:active {
+  background-color: green;
+  border: none;
+}
+.num-to-word-block input[type=radio] {
+  display: none;
+}
+.num-to-word-block input[type=radio] + span {
+  margin: 10px -2px;
+  display: inline-block;
+  padding: 30px;
+  position: relative;
+}
+.num-to-word-block input[type=radio] + span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: gold;
+  transition: all 0.5s ease-out;
+}
+.num-to-word-block input[type=radio] + span i {
+  font-size: 20pt;
+}
+.num-to-word-block input[type=radio]:checked + span i {
+  color: gold;
+}
+.num-to-word-block input[type=radio]:checked + span::after {
+  width: 100%;
+}
+
+.num-to-word-convert p {
+  text-align: left;
+}
+.num-to-word-convert p span:nth-child(1) {
+  text-transform: uppercase;
+}
+.num-to-word-convert p span:nth-child(2) {
+  display: block;
+  height: 70px;
+  width: 100%;
+  border: 1px solid white;
+  padding: 5px 10px;
+  font-size: 14pt;
+
+}
+.num-to-word-convert p span:nth-child(2):first-letter {
+  text-transform: uppercase;
+}
+
+.num-copy {
+  width: 100%;
+  cursor: pointer;
+}
+.num-copy i {
+  font-size: 20pt;
+  color: green;
+}

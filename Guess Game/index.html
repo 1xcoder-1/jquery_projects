@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Guess Game</title>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+	<style type="text/css">
+		* { font-family: 'Nunito', sans-serif; }
+		div {
+			height: 100vh;
+			padding-top: 5%;
+			text-align: center;
+		} 
+		h2 {
+			padding: 20px 0px;
+			text-align: center;
+			font-weight: bold;
+		}
+		button {
+			padding: 12px 20px;
+			display: inline-block;
+			margin: auto;
+			outline: none;
+			border: 0.6px solid #005B9A;
+			border-radius: 10px;
+			background-color: #fff;
+			color: #005B9A;
+			font-weight: bold;
+		}
+		button:hover {
+			background-color: #005B9A;
+			color: #fff;
+		}
+		img {
+			margin: auto;
+		}
+	</style>
+	<script type="text/javascript">
+		function guessNum() {
+			randomNum = Math.floor((Math.random() * 20) + 1);
+			console.log(randomNum);
+			time = 0;
+
+			do{	
+				num = prompt("Please Enter a Number between 1 - 20 :");
+				time++;
+				if (num < randomNum ) 
+					alert(`You need to Guess Greater than ${num}. Please try again.`)
+				else if (num > randomNum)
+					alert(`You need to Guess Smaller than ${num}. Please try again.`)
+				else 
+					alert(`Congrats! Correct Number is ${randomNum}.\nYou have tried for ${time}` + (time==1 ? " time." : " times."));
+			} while (randomNum != num);
+
+			document.getElementById('congrat-img').style.display = 'block';
+			document.getElementById('congrat-h3').style.display = 'block';
+			document.getElementById("p-result").innerHTML = `Correct Number is ${randomNum}.<br>You have tried for ${time}` + (time==1 ? " time." : " times.");
+			document.getElementById("btn-start").innerHTML = 'Click Here to Play Again';
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<h2>Number Guess Game</h2>
+		<img src="congrat.png" width="200" style="display: none;" id="congrat-img">
+		<h3 style="display: none;" id="congrat-h3">Congrats!</h3>
+		<p id="p-result"></p>
+		<button onclick="guessNum()" type="button" id="btn-start">Click Here to Start</button>
+	</div>
+
+	
+</body>
+</html>

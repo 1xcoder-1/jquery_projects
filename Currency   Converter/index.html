@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="author" content="CodePel">
+      <title> Numbers to Words Converter Example </title>
+      <!-- Style CSS -->
+      <link rel="stylesheet" href="./css/style.css">
+      <!-- Demo CSS (No need to include it into your project) -->
+     
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
+   </head>
+   <body>
+      <main class="cd__main">
+         <div class="num-to-word-block">
+  <div class="num-to-word-input">
+    <label> <span>Amount</span>
+      <input id="num" type="text" name="number" placeholder="Enter number here" maxlength="12"/>
+    </label>
+    <label>
+      <input class="currency" type="radio" name="currency" value="0" checked="checked"/><span><i class="fas fa-dollar-sign"> </i></span>
+    </label>
+    <label>
+      <input class="currency" type="radio" name="currency" value="1"/><span><i class="fas fa-euro-sign"> </i></span>
+    </label>
+    <label>
+      <input class="currency" type="radio" name="currency" value="2"/><span><i class="fas fa-pound-sign"> </i></span>
+    </label>
+    <label>
+      <input class="currency" type="radio" name="currency" value="3"/><span><i class="fas fa-ruble-sign"> </i></span>
+    </label>
+  </div>
+  <div class="num-to-word-convert">
+    <p class="num-to-word-converter-english"><span>english</span><span></span></p>
+    <button class="num-copy num-to-word-converter-copy-english"><i class="far fa-copy"></i></button>
+  </div>
+</div>
+       
+      </main>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+      <!-- Script JS -->
+      <script src="./js/script.js"></script>
+      <!--$%analytics%$-->
+   </body>
+</html>
