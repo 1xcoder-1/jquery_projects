@@ -24,28 +24,4 @@ This Photo Gallery project is part of the EBAC FullStack Java Developer course, 
 - **Insert Form:**
   - Fill in the field with the URL of the new image and click "Add" to include the image in the gallery.
 
-- **Full Size View:**
-  - By clicking on an image, you can view it in full size in a new tab.
 
-## How to use:
-
-1. **Acesse o site:**
-   - Visit [Image Gallery](https://ebac-proj-galeria-de-imagens.vercel.app/)
-
-2. **Add New Images:**
-   - Click the "New Image +" button in the header.
-
-3. **Fill the form:**
-   - Enter the URL of the new image into the form and click "Add".
-
-4. **View Images:**
-   - Look at the images added to the gallery.
-
-5. **Full Size View:**
-   - Click on an image to view it full size in a new tab.
-
-<div align="center">
-  
-  ## Feedback and Contributions
-Feedbacks are welcome! If you have suggestions or want to contribute to improving this project, feel free to open an issue.
-</div>
